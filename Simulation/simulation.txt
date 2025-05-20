@@ -1,0 +1,37 @@
+rm(list=ls())
+gamogata <-function(N, alpha, beta, mu) {
+##############
+   p<-numeric(length=N)
+  s <- numeric(length=N)
+  t <- numeric(length=N)
+  U <- numeric(length=N)
+  z<-numeric(length=N)
+  M<-numeric(length=N)
+  A<-numeric(length=N)
+  t[1]=0
+  A[1]=0.8
+  # Initialize
+  # Ogata's modified thinning algorithm
+ for(i in 2:N) {
+   M[i]=A[i-1]+alpha/(beta*exp(1))
+    s[i] <- rexp(1, rate=M[i])
+    t[i] <- t[i-1] + s[i]
+    z[i-1]<-rgamma(1,10,1)
+    A[i]=A[i-1]+alpha*z[i-1]*s[i]*exp(-beta*s[i])
+    #M[i]=A[i]+alpha/(beta*exp(1))
+    U[i] <- runif(1, min=0, max=M[i])
+    
+    # Ogata's thinning algorithm
+    
+    #lam[n]=mu+ alpha * z[n-1]*s[n-1]* exp(-beta*(s[n-1]))
+    if (U[i]<A[i-1]) {
+      p[i] <- t[i]  }
+    i=i+1
+ }
+  
+  sim=list(A=A,p=p,t=t,s=s,M=M)
+  return(sim)
+}
+#####
+
+gamogata(N=20,mu=3,alpha=0.2,beta=0.8)

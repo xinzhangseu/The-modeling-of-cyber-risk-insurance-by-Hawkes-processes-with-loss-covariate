@@ -1,0 +1,11 @@
+All data used in this paper are the format of .rda that can be recognized by R.
+The data prc_hack.rda is a subset of the original PRC dataset,  which  includes all breaches 
+recorded from 2015-2019 with hacking typed breach.
+ 
+
+The datasets prc_hack_bus_arr.rda and prc_hack_med_arr.rda are the time series that 
+the breaches recorded,  here we consider them the occurrence time of the breaches.
+
+The datasets prc_hack_bus_arr_interval.rda and prc_hack_med_arr_interval.rda are the
+ interarrival times that are mainly used for modeling.
+

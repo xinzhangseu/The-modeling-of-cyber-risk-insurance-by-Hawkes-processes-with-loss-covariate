@@ -1,0 +1,21 @@
+#This function mainly solves the linear ode
+library(deSolve)
+loss<-function(t,state,parameters){
+  with(as.list(c(state,parameters)),{
+    k=beta-alpha*mu*mu0
+    v=(alpha*mu*mu0/k)*(1-exp(-k*t))
+    w=(mu+(a*mu*mu0)/k)*t+((alpha*mu*mu0)/(k^2))*(exp(-k*t)-1)
+    p=mu0*w
+    a=(2*mu*mu0*alpha+(alpha^2)*mu0)*v+mu*mu2*(alpha^2)
+    b=mu*mu0+mu2*v+2*mu*mu0*w
+    c=mu*mu0*v+alpha*mu*mu0*p
+ dX<--X+a
+ dY<-2*Z+b
+ dZ<-X-2*Z+c
+ list(c(dX,dY,dZ))
+  })
+}
+parameters<-c(beta=4,alpha=2,mu=1,mu0=1,mu2=1)
+state<-c(X=0,Y=0,Z=0)
+times<-seq(0,10,by=0.01)
+out=ode(y=state,times=times,func=loss,parms=parameters)
